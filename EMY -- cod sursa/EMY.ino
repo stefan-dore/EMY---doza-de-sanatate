@@ -346,16 +346,16 @@ bool checkForEmpty() {
 // Function that checks if one of the timers is 00.00 
 void checkTimer() {
   for (int i = 0; i < 12; i++) {
-    if (C[i].m == TIME.Minute && C[i].h == TIME.Hour) { 
+    if (C[i].m == TIME.Minute && C[i].h == TIME.Hour && C[i].filled == 1) { 
       if (C[i].poz <= 7)
         rotateMotor(7-C[i].poz);
       else
         rotateMotor(19-C[i].poz);
     C[i].m = 0; C[i].h = 0; C[i].filled = 0;
-    servoMotor.write(0);
+    servoMotor.write(25);
     sort(C, 12);
-    delay(3000);
-    servoMotor.write(90);
+    delay(5000);
+    servoMotor.write(119);
     }
   }
 }
@@ -461,11 +461,27 @@ void drawScreen5() {
   printDOWN_ARROW(260, 167);
 }
 
-void setup() {
-  // Attach the servo to a pin
-  servoMotor.attach(10);
+// Function that tells the user the dispenser id full
+void fullError() {
+    // Prepare the LCD
+    prepLCD(0, 0, 0, 255, 0, 0, "BigFont");
+    LCD.clrScr();
 
-  // Initialize the LCD and clear it
+    // Flash the message
+    for (int i=1; i<=3; i++) {
+      LCD.print("DISPENSER PLIN!", CENTER, 120);
+      delay(700);
+      LCD.clrScr();
+      delay(100);
+    }
+}
+
+void setup() {
+  // Attach the servo to a pin and set it to the initial position
+  servoMotor.attach(10);
+  servoMotor.write(119);
+
+  // Initialize the LCD and clear it and rotate it
   LCD.InitLCD();
   LCD.clrScr();
 
@@ -499,8 +515,8 @@ void loop() {
         // Check if the button was pressed and if yes switch to screen 2
         if(Touch.dataAvailable()) {
           Touch.read();
-          xT = Touch.getX();
-          yT = Touch.getY();
+          xT = 319 - Touch.getX();
+          yT = 269 - Touch.getY();
           if (buttonPressed(xT, yT, 40, 145, 279, 185) == 1) {
            SCREEN = 2;
            LCD.clrScr();
@@ -517,14 +533,21 @@ void loop() {
         // Check if one of the buttons was pressed and if yes switch to the coresponding screen
         if(Touch.dataAvailable()) {
           Touch.read();
-          xT = Touch.getX();
-          yT = Touch.getY();
-          if (buttonPressed(xT, yT, 40, 60, 279, 100) == 1 && checkForEmpty() == 1) {
-           SCREEN = 3;
-           LCD.clrScr();
-           break;
+          xT = 319 - Touch.getX();
+          yT = 269 - Touch.getY();
+          if (buttonPressed(xT, yT, 40, 60, 279, 100)) {
+           if (checkForEmpty()) {
+            SCREEN = 3;
+            LCD.clrScr();
+            break;
+           } else {
+            fullError();
+            SCREEN = 2;
+            LCD.clrScr();
+            break;
+           }
           }
-          if (buttonPressed(xT, yT, 40, 140, 279, 180) == 1) {
+          if (buttonPressed(xT, yT, 40, 140, 279, 180)) {
            SCREEN = 5;
            LCD.clrScr();
            break;
@@ -545,9 +568,9 @@ void loop() {
         // Check if the button was pressed and if yes switch to screen 4
         if(Touch.dataAvailable()) {
           Touch.read();
-          xT = Touch.getX();
-          yT = Touch.getY();
-          if (buttonPressed(xT, yT, 40, 130, 279, 170) == 1) {
+          xT = 319 - Touch.getX();
+          yT = 269 - Touch.getY();
+          if (buttonPressed(xT, yT, 40, 130, 279, 170)) {
            SCREEN = 4;
            LCD.clrScr();
            break;
@@ -570,8 +593,8 @@ void loop() {
         // Check if the button was pressed and if yes switch to screen 2
         if (Touch.dataAvailable()) {
           Touch.read();
-          xT = Touch.getX();
-          yT = Touch.getY();
+          xT = 319 - Touch.getX();
+          yT = 269 - Touch.getY();
           // Update the number wheel
           updateNumbWheel(xT, yT);
           if (buttonPressed(xT, yT, 40, 190, 279, 230)) {
@@ -594,8 +617,8 @@ void loop() {
       // Check if the button was pressed and if yes switch to screen 2
       if (Touch.dataAvailable()) {
         Touch.read();
-        xT = Touch.getX();
-        yT = Touch.getY();
+        xT = 319 - Touch.getX();
+        yT = 269 - Touch.getY();
         if (buttonPressed(xT, yT, 5, 2, 45, 65)) {
           SCREEN = 2;
           LCD.clrScr();

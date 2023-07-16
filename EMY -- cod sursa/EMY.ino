@@ -516,7 +516,7 @@ void loop() {
         if(Touch.dataAvailable()) {
           Touch.read();
           xT = 319 - Touch.getX();
-          yT = 269 - Touch.getY();
+          yT = 259 - Touch.getY();
           if (buttonPressed(xT, yT, 40, 145, 279, 185) == 1) {
            SCREEN = 2;
            LCD.clrScr();
@@ -534,7 +534,7 @@ void loop() {
         if(Touch.dataAvailable()) {
           Touch.read();
           xT = 319 - Touch.getX();
-          yT = 269 - Touch.getY();
+          yT = 259 - Touch.getY();
           if (buttonPressed(xT, yT, 40, 60, 279, 100)) {
            if (checkForEmpty()) {
             SCREEN = 3;
@@ -569,7 +569,7 @@ void loop() {
         if(Touch.dataAvailable()) {
           Touch.read();
           xT = 319 - Touch.getX();
-          yT = 269 - Touch.getY();
+          yT = 259 - Touch.getY();
           if (buttonPressed(xT, yT, 40, 130, 279, 170)) {
            SCREEN = 4;
            LCD.clrScr();
@@ -594,10 +594,10 @@ void loop() {
         if (Touch.dataAvailable()) {
           Touch.read();
           xT = 319 - Touch.getX();
-          yT = 269 - Touch.getY();
+          yT = 259 - Touch.getY();
           // Update the number wheel
           updateNumbWheel(xT, yT);
-          if (buttonPressed(xT, yT, 40, 190, 279, 230)) {
+          if (buttonPressed(xT, yT, 40, 175, 279, 220)) {
             addPill(currH, currM, emptyComp()); 
             sort(C, 12);
             SCREEN = 2;
@@ -618,7 +618,7 @@ void loop() {
       if (Touch.dataAvailable()) {
         Touch.read();
         xT = 319 - Touch.getX();
-        yT = 269 - Touch.getY();
+        yT = 259 - Touch.getY();
         if (buttonPressed(xT, yT, 5, 2, 45, 65)) {
           SCREEN = 2;
           LCD.clrScr();

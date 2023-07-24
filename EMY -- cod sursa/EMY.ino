@@ -163,7 +163,7 @@ void printNumbWheel() {
 // Function that updates the number wheel
 void updateNumbWheel(int xT, int yT) {
   // Hour section
-  if (buttonPressed(xT, yT, 65, 90, 95, 106)) {
+  if (buttonPressed(xT, yT, 65, 80, 95, 94)) {
     if (prevH == 23) prevH = 0;
     else prevH++;
     if (currH == 23) currH = 0;
@@ -171,7 +171,7 @@ void updateNumbWheel(int xT, int yT) {
     if (nextH == 23) nextH = 0;
     else nextH++;
   }
-  if (buttonPressed(xT, yT, 65, 136, 95, 152)) {
+  if (buttonPressed(xT, yT, 65, 121, 95, 135)) {
     if (prevH == 0) prevH = 23;
     else prevH--;
     if (currH == 0) currH = 23;
@@ -180,7 +180,7 @@ void updateNumbWheel(int xT, int yT) {
     else nextH--;
   }
   // Minute section
-  if (buttonPressed(xT, yT, 230, 90, 260, 106)) {
+  if (buttonPressed(xT, yT, 230, 80, 260, 94)) {
     if (prevM == 59) prevM = 0;
     else prevM++;
     if (currM == 59) currM = 0;
@@ -188,7 +188,7 @@ void updateNumbWheel(int xT, int yT) {
     if (nextM == 59) nextM = 0;
     else nextM++;
   }
-  if (buttonPressed(xT, yT, 230, 136, 260, 152)) {
+  if (buttonPressed(xT, yT, 230, 121, 260, 135)) {
     if (prevM == 0) prevM = 59;
     else prevM--;
     if (currM == 0) currM = 59;
@@ -302,11 +302,11 @@ void printSchedule (int first, int last) {
 
 // Function that updates the med wheel
 void updateMedWheel() {
-  if (buttonPressed(xT, yT, 260, 100, 290, 116) && first >= 1) {
+  if (buttonPressed(xT, yT, 260, 95, 290, 111) && first >= 1) {
     first--;
     last--;
   }
-  if (buttonPressed(xT, yT, 260, 152, 290, 168) && last <= 10) { 
+  if (buttonPressed(xT, yT, 260, 137, 290, 153) && last <= 10) { 
     first++;
     last++;
   }
@@ -426,7 +426,7 @@ void drawScreen4() {
   prepLCD(0, 0, 0, 255, 255, 255, "BigFont");
 
   // Print the text
-  LCD.print("SETA-TI ORA", CENTER, 20);
+  LCD.print("SETATI ORA", CENTER, 20);
   LCD.print(":", 155, 105);
 
   // Print the numbers
@@ -517,7 +517,7 @@ void loop() {
           Touch.read();
           xT = 319 - Touch.getX();
           yT = 259 - Touch.getY();
-          if (buttonPressed(xT, yT, 40, 145, 279, 185) == 1) {
+          if (buttonPressed(xT, yT, 40, 130, 279, 155) == 1) {
            SCREEN = 2;
            LCD.clrScr();
            break;
@@ -535,7 +535,7 @@ void loop() {
           Touch.read();
           xT = 319 - Touch.getX();
           yT = 259 - Touch.getY();
-          if (buttonPressed(xT, yT, 40, 60, 279, 100)) {
+          if (buttonPressed(xT, yT, 40, 80, 279, 100)) {
            if (checkForEmpty()) {
             SCREEN = 3;
             LCD.clrScr();
@@ -547,12 +547,12 @@ void loop() {
             break;
            }
           }
-          if (buttonPressed(xT, yT, 40, 140, 279, 180)) {
+          if (buttonPressed(xT, yT, 40, 130, 279, 150)) {
            SCREEN = 5;
            LCD.clrScr();
            break;
           }
-          if (buttonPressed(xT, yT, 5, 2, 45, 65)) {
+          if (buttonPressed(xT, yT, 5, 2, 45, 50)) {
             SCREEN = 1;
             LCD.clrScr();
             break;
@@ -570,7 +570,7 @@ void loop() {
           Touch.read();
           xT = 319 - Touch.getX();
           yT = 259 - Touch.getY();
-          if (buttonPressed(xT, yT, 40, 130, 279, 170)) {
+          if (buttonPressed(xT, yT, 40, 125, 279, 145)) {
            SCREEN = 4;
            LCD.clrScr();
            break;
@@ -597,7 +597,7 @@ void loop() {
           yT = 259 - Touch.getY();
           // Update the number wheel
           updateNumbWheel(xT, yT);
-          if (buttonPressed(xT, yT, 40, 175, 279, 220)) {
+          if (buttonPressed(xT, yT, 40, 155, 279, 180)) {
             addPill(currH, currM, emptyComp()); 
             sort(C, 12);
             SCREEN = 2;
